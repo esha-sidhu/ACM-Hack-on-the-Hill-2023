@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useRef, useEffect, useState } from 'react';
 
+import "./mapbox-gl-geocoder.css";
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmVua3dpZXJzbWEiLCJhIjoiY2xldnF2NnlmMDR4YzNyczNxMGRpbGtiZiJ9.45KQhC5Gq8OxIMwzaUxSLg';
@@ -25,7 +26,8 @@ function App() {
     map.current.addControl(
       new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl
+      mapboxgl: mapboxgl,
+      style: 'mapbox://styles/mapbox/streets-v12'
       })
     );
   }, []);
@@ -45,6 +47,7 @@ function App() {
     Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
     </div>
     <div ref={mapContainer} className="map-container" />
+    {/* <div ref={map}/> */}
     </div>
   );
 }
