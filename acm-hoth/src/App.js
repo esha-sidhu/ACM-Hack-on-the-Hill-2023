@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useRef, useEffect, useState } from 'react';
 
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmVua3dpZXJzbWEiLCJhIjoiY2xldnF2NnlmMDR4YzNyczNxMGRpbGtiZiJ9.45KQhC5Gq8OxIMwzaUxSLg';
 
@@ -21,7 +22,13 @@ function App() {
     zoom: zoom,
     });
     map.current.addControl(new mapboxgl.NavigationControl());
-  });
+    map.current.addControl(
+      new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl
+      })
+    );
+  }, []);
 
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
@@ -30,7 +37,7 @@ function App() {
     setLat(map.current.getCenter().lat.toFixed(4));
     setZoom(map.current.getZoom().toFixed(2));
     });
-  });
+  }, []);
 
   return (
     <div>
